@@ -1,6 +1,14 @@
 #!/bin/bash
 
-. ./filter.lib
+scriptPath=$(dirname $0)
+chmod 744 "${scriptPath}/output.sh"
+source "${scriptPath}/output.sh"
+
+for files in "rollno.sh"
+do
+    chmod 744 "${scriptPath}/filters/${files}"
+    source "${scriptPath}/filters/${files}"
+done
 
 if [ ! -d "./data/Students" ]; then
     echo "Database of Students does not exist locally."
@@ -12,18 +20,18 @@ if [ ! -d "./data/Students" ]; then
 fi
 
 # cool ascii art :p
-toilet --metal -w 150 Student Search IITK
+#toilet --metal -w 150 Student Search IITK
 
 echo "Please choose on what basis do you want to filter your search?"
 
 # start of asking user of filter method
-PS3="Pick an Option: "
-options=("Roll Number" "Name" "Blood Group" "Department" "Email-ID" "Gender" "Hall" "Quit")
+PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
+options=("Roll Number" "Name" "Blood Group" "Department" "Email-ID" "Gender" "Hall" "Feedback" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
         "Roll Number")
-            echo "Roll Number" ;;
+            rollno ;;
         "Name")
             echo "Name" ;;
         "Blood Group")
@@ -36,8 +44,10 @@ do
             echo "Gender" ;;
         "Hall")
             echo "Hall" ;;
+        "Feedback")
+            echo "Feedback" ;;
         "Quit")
-            echo "Exiting Student Search" 
+            echo "Thank You for using the search. Exiting Student Search" 
             break ;;
         *)
             echo "Invalid Option" ;;
