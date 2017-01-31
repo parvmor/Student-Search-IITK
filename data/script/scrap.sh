@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ -d "../Students" ]; then
+    echo "Script has already been run. Delete Students directory to rerun it."
+    exit
+fi
+
 chmod 744 directoryMaker.sh
 ./directoryMaker.sh
 
