@@ -1,28 +1,32 @@
 #!/bin/bash
 
 echo "Making Necessary Directories"
+echo
 
 cd ..
 mkdir Students #top level root directory
 cd Students
     
-    for program in "BTech" "BS" "MTech"
+    for i in `seq 11 16`
     do
-        echo "Making directories for ${program}"
-        mkdir "${program}"
-        cd ${program}
-            for i in `seq 13 16`
+        echo "Making directories for Y${i}"
+        mkdir "Y${i}"
+        cd "Y${i}"
+            for programs in "BTech" "MTech" "BS"
             do
-                mkdir "Y${i}"
-                cd "Y${i}"
-                    mkdir "Gender" "Hall" "Department" 
-                    mkdir "BloodGroup" "Name" "RollNo"
+                mkdir "${programs}"
+                cd "${programs}"
+                    touch "Gender" "Hall" "Department" 
+                    touch "BloodGroup" "Name" "RollNo"
+                    touch "EmailID"
                 cd ..
             done
         cd ..
-        echo "Directories for ${program} made"
+        echo "Directories for Y${i} made"
+        echo 
     done
 
 cd ..
 cd script
 echo "Necessary Directories Made"
+echo
