@@ -1,10 +1,13 @@
 #!/bin/bash
 
 scriptPath=$(dirname $0)
+PWD=`pwd`
 chmod 744 "${scriptPath}/output.sh"
 source "${scriptPath}/output.sh"
 
-for files in "rollno.sh"
+programs=("BTech" "BS" "MTech")
+
+for files in "rollno.sh" "bloodGroup.sh" "name.sh"
 do
     chmod 744 "${scriptPath}/filters/${files}"
     source "${scriptPath}/filters/${files}"
@@ -20,7 +23,7 @@ if [ ! -d "./data/Students" ]; then
 fi
 
 # cool ascii art :p
-#toilet --metal -w 150 Student Search IITK
+toilet --metal -w 150 Student Search IITK
 
 echo "Please choose on what basis do you want to filter your search?"
 
@@ -33,9 +36,9 @@ do
         "Roll Number")
             rollno ;;
         "Name")
-            echo "Name" ;;
+            echo name ;;
         "Blood Group")
-            echo "Blood Group" ;;
+            bloodGroup ;;
         "Department")
             echo "Department" ;;
         "Email-ID")

@@ -15,7 +15,7 @@ rollno() {
     fi
     cd ${scriptPath}/data/Students
         cd "Y${year}"
-            for program in "BTech" "BS" "MTech"
+            for program in "${programs[@]}"
             do
                 cd "${program}"
                     line=`grep -Pn "${roll}" RollNo | cut -d: -f 1`
@@ -39,5 +39,6 @@ rollno() {
         cd ..
     cd ../..  
     output "$roll" "Y${year}" "$sProgram" "$bloodGroup" "$dept" "$email" "$gender" "$hall" "$name"
+    cd "${PWD}"
     return
 }
