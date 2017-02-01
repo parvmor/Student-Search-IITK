@@ -14,6 +14,7 @@ hall() {
         done
         if [ "${flag}" == "0" ]; then
             echo "No such hall exists"
+            PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
             cd "${PWD}"
             return
         fi
@@ -46,8 +47,8 @@ hall() {
         cd ../..
         break
     done
-    if [ -s "temp/hall" ]; then
-        echo "No such hall exists"
+    if [ ! -s "temp/hall" ]; then
+        echo "No such student exists"
     fi
     rm "temp/hall"
     PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "

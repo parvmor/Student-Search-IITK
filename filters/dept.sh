@@ -15,6 +15,7 @@ dept() {
         if [ "$flag" == "0" ]; then
             echo "No such department exists"
             cd "${PWD}"
+            PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
             return
         fi
         department="${Dept}"
@@ -46,10 +47,10 @@ dept() {
 		cd "../.."
         break
     done
-    if [ -s "temp/dept"  ]; then
+    if [ ! -s "temp/dept"  ]; then
         echo "No such department exists"
     fi
 	rm "temp/dept"
     PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
-	cd "${PWD}
+	cd "${PWD}"
 }

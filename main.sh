@@ -7,7 +7,7 @@ source "${scriptPath}/output.sh"
 
 programs=("BTech" "BS" "MTech" "Prep" )
 
-for files in "rollno.sh" "bloodGroup.sh" "name.sh" "emailid.sh" "dept.sh" "gender.sh"
+for files in "rollno.sh" "bloodGroup.sh" "name.sh" "emailid.sh" "dept.sh" "gender.sh" "hall.sh"
 do
     chmod 744 "${scriptPath}/filters/${files}"
     source "${scriptPath}/filters/${files}"
@@ -53,7 +53,7 @@ do
                 gender 
                 break ;;
             "Hall")
-                echo "Hall"
+                hall
                 break ;;
             "Feedback")
                 echo "Feedback"

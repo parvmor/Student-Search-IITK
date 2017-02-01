@@ -29,7 +29,9 @@ bloodGroup() {
             cd ..
         done
     cd ../..
-    #insert code here
+    if [ ! -s "temp/bG"  ]; then
+        echo "No such blood group exists"
+    fi
     rm temp/bG
     cd "${PWD}"
 }

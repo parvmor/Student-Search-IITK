@@ -4,6 +4,12 @@ rollno() {
     echo "Please Input The Roll Number:"
     read roll
     year="${roll:0:2}"
+    if [ "${year}" -eq "${year}" ] 2>/dev/null; then
+        echo 
+    else
+        echo "error: Not a Number"
+        return
+    fi
     if [ "${year}" -lt "11"  ]; then
         echo "Data for Y${year} not available."
         return
