@@ -8,7 +8,7 @@ done
 
 superFilter() {
     echo "Please select secondary filters:"
-    PS3="Pick an Option(Enter Ctrl-C to exit):"
+    PS3="Pick an Option(Enter Ctrl-C to exit): "
     select opt in "${options[@]}"
     do
         case "$opt" in
@@ -18,8 +18,10 @@ superFilter() {
             "Name")
                 break ;;
             "Blood Group")
+                superBG "$1"
                 break ;;
             "Department")
+                superDept "$1"
                 break ;;
             "Email-ID")
                 break ;;
@@ -31,5 +33,6 @@ superFilter() {
                 echo "Invalid Option" ;;
         esac
     done
+    PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
     cd "${PWD}"
 }

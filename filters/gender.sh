@@ -50,11 +50,12 @@ gender() {
     fi
     while [ 1 -lt 2  ]
     do
-        echo "Do you want to see the result(y) or add further filters(n)?[y/n]"
+        echo "Do you want to see the result(y) or add further filters(n)?[y/n](Ctrl-C to exit)"
         read ans
         if [ "${ans}" = "y"  ] || [ "${ans}" = "Y"   ]; then
             rollnoVAR "gender"           
             echo "Do you want to add further filters?(y/n)"
+            read ans
             if [ "${ans}" = "n"  ] || [ "${ans}" = "N"  ];then
                 break
             fi
@@ -62,7 +63,6 @@ gender() {
         fi
         if [ "${ans}" = "n"  ] || [ "${ans}" = "N"  ];then
             superFilter "gender"
-            break
         fi
     done
     rm "temp/gender"

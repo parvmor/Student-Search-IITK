@@ -6,6 +6,8 @@ chmod 744 "${scriptPath}/output.sh"
 source "${scriptPath}/output.sh"
 
 programs=("BTech" "BS" "MTech" "Prep" )
+departments=("COMPUTER SCIENCE & ENGG." "ELECTRICAL ENGG." "CIVIL ENGG." "MECHANICAL ENGG." "AEROSPACE ENGG." "MATERIALS SCIENCE & ENGG." "BIOL.SCI. AND BIO.ENGG." "CHEMICAL ENGG." "Math for Pg online" "CHEMISTRY" "PHYSICS" "EARTH SCIENCES" "ECONOMICS")
+
 
 cd "${scriptPath}/secondaryFilters"
 chmod 744 "rollno.sh"

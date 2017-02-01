@@ -30,10 +30,10 @@ rollnoVAR() {
             cd ..
         cd ../..
     done < "temp/$1"
-    vim  temp/display
     if [ ! -s "temp/display" ]; then
-        echo "No Result Found"
+        echo "No Result Found" > "temp/display"
     fi
+    vim  temp/display
     rm temp/display
     return
 }
