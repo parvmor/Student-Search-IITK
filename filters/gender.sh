@@ -1,10 +1,10 @@
 
 gender() {
-   PS3="Please choose the required gender:"
-   genders=("M" "F")
-   gender=""
-   select gen in "${genders[@]}"
-   do
+    PS3="Please choose the required gender:"
+    genders=("M" "F")
+    gender=""
+    select gen in "${genders[@]}"
+    do
         case "${gen}" in
             "F")
                  ;;
@@ -44,11 +44,24 @@ gender() {
             done
         cd ../..
         break
-   done
-   if [ ! -s "temp/gender" ]; then
-       echo "No such gender exists"
-   fi
-   rm "temp/gender"
-   PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
-   cd "${PWD}"
+    done
+    if [ ! -s "temp/gender" ]; then
+        echo "No such gender exists"
+    fi
+    while [ 1 -lt 2  ]
+    do
+        echo "Do you want to see the result(y) or add further filters(n)?[y/n]"
+        read ans
+        if [ "${ans}" = "y"  ] || [ "${ans}" = "Y"   ]; then
+            rollnoVAR "gender"           
+            break
+        else 
+            if [ "${ans}" = "n"  ] || [ "${ans}" = "N"  ];then
+                echo parv
+            fi
+        fi
+    done
+    rm "temp/gender"
+    PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
+    cd "${PWD}"
 }

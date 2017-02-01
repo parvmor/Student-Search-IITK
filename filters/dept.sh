@@ -8,8 +8,9 @@ dept() {
         flag="0"
         for temp in "${departments[@]}"
         do
-            if [ "${Dept}" == "${temp}"  ];then
+            if [ "${Dept}" = "${temp}"  ];then
                 flag="1"
+                break
             fi
         done
         if [ "$flag" == "0" ]; then
@@ -27,7 +28,7 @@ dept() {
                     for program in "${programs[@]}"
                     do
                         cd "${program}"
-                            lines=`grep -Pn "${dept}" Department | cut -d: -f 1`
+                            lines=`grep -Pn "${department}" Department | cut -d: -f 1`
                             if [ "${lines}" = "" ]; then
                                 cd ..
                                 continue
@@ -50,6 +51,19 @@ dept() {
     if [ ! -s "temp/dept"  ]; then
         echo "No such department exists"
     fi
+    while [ 1 -lt 2  ]
+    do
+        echo "Do you want to see the result(y) or add further filters(n)?[y/n]"
+        read ans
+        if [ "${ans}" = "y"  ] || [ "${ans}" = "Y"   ]; then
+            rollnoVAR "dept"           
+            break
+        else 
+            if [ "${ans}" = "n"  ] || [ "${ans}" = "N"  ];then
+                echo parv
+            fi
+        fi
+    done
 	rm "temp/dept"
     PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
 	cd "${PWD}"

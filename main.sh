@@ -7,15 +7,15 @@ source "${scriptPath}/output.sh"
 
 programs=("BTech" "BS" "MTech" "Prep" )
 
-for files in "rollno.sh" "bloodGroup.sh" "name.sh" "emailid.sh" "dept.sh" "gender.sh" "hall.sh"
+for files in `ls ${scriptPath}/filters`
 do
     chmod 744 "${scriptPath}/filters/${files}"
     source "${scriptPath}/filters/${files}"
 done
 
-if [ ! -d "./data/Students" ]; then
+if [ ! -d "${scriptPath}/data/Students" ]; then
     echo "Database of Students does not exist locally."
-    cd ./data/script
+    cd "${scriptPath}/data/script"
     chmod 744 scrap.sh
     ./scrap.sh
     cd -
@@ -33,7 +33,7 @@ do
     echo "Please choose on what basis do you want to filter your search?"
     select opt in "${options[@]}"
     do
-        case $opt in
+        case "$opt" in
             "Roll Number")
                 rollno 
                 break ;;
@@ -59,7 +59,7 @@ do
                 echo "Feedback"
                 break ;;
             "Quit")
-                echo "Thank You for using the search. Exiting Student Search" 
+                echo "Thank You for using the search. Exiting Student Search." 
                 exit ;;
             *)
                 echo "Invalid Option" ;;
