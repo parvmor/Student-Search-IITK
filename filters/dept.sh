@@ -57,11 +57,15 @@ dept() {
         read ans
         if [ "${ans}" = "y"  ] || [ "${ans}" = "Y"   ]; then
             rollnoVAR "dept"           
-            break
-        else 
-            if [ "${ans}" = "n"  ] || [ "${ans}" = "N"  ];then
-                echo parv
+            echo "Do you want to add further filters?(y/n)"
+            if [ "$ans" = "n" ] || [ "$ans" = "N" ];then
+                break
             fi
+            ans="n"
+        fi
+        if [ "${ans}" = "n"  ] || [ "${ans}" = "N"  ];then
+            superFilter "dept"
+            break
         fi
     done
 	rm "temp/dept"

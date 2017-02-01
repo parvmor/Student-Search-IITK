@@ -55,12 +55,15 @@ hall() {
         echo "Do you want to see the result(y) or add further filters(n)?[y/n]"
         read ans
         if [ "${ans}" = "y"  ] || [ "${ans}" = "Y"   ]; then
-            rollnoVAR "hall"           
-            break
-        else 
+            rollnoVAR "hall"   
+            echo "Do you want to add further filters?(y/n)"
             if [ "${ans}" = "n"  ] || [ "${ans}" = "N"  ];then
-                echo parv
+                break
             fi
+            ans="n"
+        fi
+        if [ "${ans}" = "n"  ] || [ "${ans}" = "N"  ];then
+            superFilter "hall"
         fi
     done
     rm "temp/hall"

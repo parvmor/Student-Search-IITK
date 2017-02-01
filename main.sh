@@ -7,6 +7,14 @@ source "${scriptPath}/output.sh"
 
 programs=("BTech" "BS" "MTech" "Prep" )
 
+cd "${scriptPath}/secondaryFilters"
+chmod 744 "rollno.sh"
+source "rollno.sh"
+chmod 744 "superFilterate.sh"
+source "superFilterate.sh"
+cd - >/dev/null
+
+
 for files in `ls ${scriptPath}/filters`
 do
     chmod 744 "${scriptPath}/filters/${files}"
@@ -27,11 +35,11 @@ toilet --metal -w 150 Student Search IITK
 
 # start of asking user of filter method
 PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
-options=("Roll Number" "Name" "Blood Group" "Department" "Email-ID" "Gender" "Hall" "Feedback" "Quit")
+options=("Roll Number" "Name" "Blood Group" "Department" "Email-ID" "Gender" "Hall")
 while [ "2" = "2"  ]
 do
     echo "Please choose on what basis do you want to filter your search?"
-    select opt in "${options[@]}"
+    select opt in "${options[@]}" "Feedback" "Quit"
     do
         case "$opt" in
             "Roll Number")

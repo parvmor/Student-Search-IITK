@@ -1,11 +1,5 @@
 # NOTE:No #!/bin/bash as this should not spawn an extra shell.
 
-for files in `ls ${scriptPath}/secondaryFilters`
-do
-    chmod 744 "${scriptPath}/secondaryFilters/${files}"
-    source "${scriptPath}/secondaryFilters/${files}"
-done
-
 bloodGroup() {
     echo "Please Input the Blood Group:"
     read bG
@@ -46,12 +40,16 @@ bloodGroup() {
         echo "Do you want to see the result(y) or add further filters(n)?[y/n]"
         read ans
         if [ "${ans}" = "y" ] || [ "${ans}" = "Y"  ]; then
-            rollnoVAR "bG"           
-            break
-        else 
-            if [ "${ans}" = "n" ] || [ "${ans}" = "N" ];then
-                echo parv
+            rollnoVAR "bG"
+            echo "Do you want to add further filters?(y/n)"
+            if [ "${ans}" = "n" ] || [ "${ans}" = "N" ];then 
+                break
             fi
+            ans="n"
+        fi
+        if [ "${ans}" = "n" ] || [ "${ans}" = "N" ];then
+            superFilter "bG"
+            break
         fi
     done
     rm temp/bG

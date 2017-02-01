@@ -54,11 +54,15 @@ gender() {
         read ans
         if [ "${ans}" = "y"  ] || [ "${ans}" = "Y"   ]; then
             rollnoVAR "gender"           
-            break
-        else 
+            echo "Do you want to add further filters?(y/n)"
             if [ "${ans}" = "n"  ] || [ "${ans}" = "N"  ];then
-                echo parv
+                break
             fi
+            ans="n"
+        fi
+        if [ "${ans}" = "n"  ] || [ "${ans}" = "N"  ];then
+            superFilter "gender"
+            break
         fi
     done
     rm "temp/gender"
