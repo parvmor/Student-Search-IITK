@@ -7,7 +7,7 @@ source "${scriptPath}/output.sh"
 
 programs=("BTech" "BS" "MTech" "Prep" )
 
-for files in "rollno.sh" "bloodGroup.sh" "name.sh" "emailid.sh" "dept.sh"
+for files in "rollno.sh" "bloodGroup.sh" "name.sh" "emailid.sh" "dept.sh" "gender.sh"
 do
     chmod 744 "${scriptPath}/filters/${files}"
     source "${scriptPath}/filters/${files}"
@@ -50,12 +50,12 @@ do
                 emailID
                 break ;;
             "Gender")
-                echo "Gender" 
+                gender 
                 break ;;
             "Hall")
                 echo "Hall"
                 break ;;
-                "Feedback")
+            "Feedback")
                 echo "Feedback"
                 break ;;
             "Quit")
