@@ -39,7 +39,7 @@ extract() {
                     email="NOT AVAILABLE"
                 fi
 
-                name=`echo "$data" | grep -P -A1 'Name' | tail -1 | grep -Po '\w[\s\w\.\(\)]*'`
+                name=`echo "$data" | grep -P -A1 'Name' | tail -1 | grep -Po '\w[\s\w\.\(\)\[\]\/]*'`
                 if [ "$name" = ""  ]; then
                     name="NOT AVAILABLE"
                 fi
@@ -53,13 +53,13 @@ extract() {
 
                 rollno=$1
 
-                ( echo "$rollno"     >> RollNo       & \
-                  echo "$gender"     >> Gender       & \
-                  echo "$email"      >> EmailID      & \
-                  echo "$bloodGroup" >> BloodGroup   & \
-                  echo "$name"       >> Name         & \
-                  echo "$dept"       >> Department   & \
-                  echo "$hall"       >> Hall )       &>/dev/null
+                ( echo "$rollno"     >> RollNo        & \
+                  echo "$gender"     >> Gender        & \
+                  echo "$email"      >> EmailID       & \
+                  echo "$bloodGroup" >> BloodGroup    & \
+                  echo "$name"       >> Name          & \
+                  echo "$dept"       >> Department    & \
+                  echo "$hall"       >> Hall )        &>/dev/null
 
             cd ..
         cd ..

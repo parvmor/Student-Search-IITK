@@ -12,7 +12,7 @@ cd Students
         echo "Making directories for Y${i}"
         mkdir "Y${i}"
         cd "Y${i}"
-            for programs in "BTech" "MTech" "BS"
+            for programs in "BTech" "MTech" "BS" "Prep"
             do
                 mkdir "${programs}"
                 cd "${programs}"
