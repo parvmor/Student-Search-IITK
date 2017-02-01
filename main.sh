@@ -7,7 +7,7 @@ source "${scriptPath}/output.sh"
 
 programs=("BTech" "BS" "MTech")
 
-for files in "rollno.sh" "bloodGroup.sh" "name.sh"
+for files in "rollno.sh" "bloodGroup.sh" "name.sh" "emailid.sh"
 do
     chmod 744 "${scriptPath}/filters/${files}"
     source "${scriptPath}/filters/${files}"
@@ -36,13 +36,13 @@ do
         "Roll Number")
             rollno ;;
         "Name")
-            echo name ;;
+            name ;;
         "Blood Group")
             bloodGroup ;;
         "Department")
             echo "Department" ;;
         "Email-ID")
-            echo "Email-ID" ;;
+            emailID ;;
         "Gender")
             echo "Gender" ;;
         "Hall")
