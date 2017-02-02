@@ -3,7 +3,8 @@
 emailID() {
     echo "Please Input The Email-ID:"
     read email
-    cd ${scriptPath}/data/Students
+    touch "${scriptPath}/temp/email"
+    cd "${scriptPath}/data/Students"
         for year in `seq 11 16`
         do
             cd "Y${year}"
@@ -16,14 +17,8 @@ emailID() {
                             echo "${lines}" > "../../../../temp/tempEID"
                             while read line
                             do
-                                bloodGroup=`head -${line} BloodGroup | tail -1`
-                                dept=`head -${line} Department | tail -1`
-                                Email=`head -${line} EmailID | tail -1`
-                                gender=`head  -${line} Gender | tail -1`
-                                hall=`head -${line} Hall | tail -1`
-                                name=`head -${line} Name | tail -1`
-                                rollno=`head -${line} RollNo | tail -1`
-                                output "$rollno" "Y${year}" "${program}" "$bloodGroup" "$dept" "$Email" "$gender" "$hall" "$name"
+                                roll=`head -${line} RollNo | tail -1` 
+                                echo "${roll}" >> "../../../../temp/email"
                             done < "../../../../temp/tempEID"
                             rm "../../../../temp/tempEID"
                         fi
@@ -32,6 +27,30 @@ emailID() {
             cd ..
         done
     cd ../..
+    if [ ! -s "temp/email" ]; then
+        echo "No such student exists"
+        rm "temp/email"
+        cd "${PWD}"
+        return    
+    fi
+    while [ 1 -lt 2 ]
+    do
+        echo "Do you want to see the result(y) or add further filters(n)?[y/n](Ctrl-C to exit)"
+        read ans
+        if [ "${ans}" = "y" ] || [ "${ans}" = "Y" ]; then
+            rollnoVAR "email"
+            echo "Do you want to add further filters?(y/n)"
+            read ans
+            if [  "${ans}" = "n" ] || [ "${ans}" = "N" ]; then
+                break
+            fi
+            ans ="n"
+        fi
+        if [ "${ans}" = "n" ] || [ "${ans}" = "N" ]; then
+            superFilter "email"
+        fi
+    done
+    rm "temp/email"
     cd "${PWD}"
     return
 }

@@ -48,6 +48,10 @@ hall() {
     done
     if [ ! -s "temp/hall" ]; then
         echo "No such student exists"
+        rm "temp/hall"
+        PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
+        cd "${PWD}"
+        return
     fi
     while [ 1 -lt 2  ]
     do
@@ -69,4 +73,5 @@ hall() {
     rm "temp/hall"
     PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
     cd "${PWD}"
+    return
 }

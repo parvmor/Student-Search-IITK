@@ -1,26 +1,7 @@
 
-superGen() {
-    gender=""
-    PS3="Please choose the required gender:"
-    select gen in "M" "F"
-    do
-        flag="0"
-        for temp in "M" "F"
-        do
-            if [ "${temp}" = "${gen}" ]; then
-                flag="1"
-                break
-            fi
-        done
-        if [ "$flag" = "0" ]; then
-            echo "No such gender exists"
-            cd "${PWD}"
-            PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
-            return
-        fi
-        gender="${gen}"
-        break
-    done
+superEmail() {
+    echo "Please Input the Email-ID:"
+    read email
     touch "${scriptPath}/temp/tempStor"
     while read line
     do
@@ -41,8 +22,9 @@ superGen() {
                             cd ..
                             continue
                         fi
-                        gen=`head -${Line} Gender | tail -1`
-                        if [ "${gender}" = "${gen}" ]; then
+                        EID=`head -${Line} EmailID | tail -1`
+                        #lower case search
+                        if [[ "${EID,,}" = *"${email,,}"*  ]]; then
                             echo "${line}" >> "../../../../temp/tempStor"
                         fi
                     cd ..

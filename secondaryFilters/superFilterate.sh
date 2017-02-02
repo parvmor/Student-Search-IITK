@@ -16,6 +16,7 @@ superFilter() {
                 superRoll "$1"
                 break ;;
             "Name")
+                superName "$1"
                 break ;;
             "Blood Group")
                 superBG "$1"
@@ -24,6 +25,7 @@ superFilter() {
                 superDept "$1"
                 break ;;
             "Email-ID")
+                superEmail "$1"
                 break ;;
             "Gender")
                 superGen "$1"

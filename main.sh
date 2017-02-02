@@ -75,5 +75,7 @@ do
                 echo "Invalid Option" ;;
         esac
     done
+    rm -rf "${scriptPath}/temp"
+    mkdir "${scriptPath}/temp"
 done
 #end of filter
