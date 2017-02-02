@@ -11,6 +11,16 @@ chmod 744 directoryMaker.sh
 echo "Starting to scrap data now..."
 echo
 
+insert() {
+    while [ 1 -lt 2 ]
+    do    
+        if [ `wc -l < ${1}` -eq "`expr ${2} - 1`" ]; then
+            echo "${3}" >> "${1}"
+            break
+        fi
+    done
+}
+
 extract() {
     data=$(curl -s http://oa.cc.iitk.ac.in/Oa/Jsp/OAServices/IITk_SrchRes.jsp?sbm=Y -d typ="stud" -d numtxt=$1) # store data in a variable for multiple use
     cd ../Students
@@ -21,46 +31,52 @@ extract() {
             fi 
             cd "${program}"
 
-                gender=`echo "$data" | grep -P -A1 'Gender' | tail -1 | grep -Po '\w'`
+                Gender=`echo "$data" | grep -P -A1 'Gender' | tail -1 | grep -Po '\w'`
 
-                if [ "$gender" = "F"   ]; then
-                    hall="GHT"
+                if [ "$Gender" = "F"   ]; then
+                    Hall="GHT"
                 else
-                    if [ "$gender" = "M"  ]; then
-                        hall=`echo "$data" | grep -P -A1 'Hostel Info' | tail -1 | grep -Po 'HALL[\dX]{1}'`
+                    if [ "$Gender" = "M"  ]; then
+                        Hall=`echo "$data" | grep -P -A1 'Hostel Info' | tail -1 | grep -Po 'HALL[\dX]{1}'`
                     else
-                        hall="NOT AVAILABLE"
-                        gender="UNKNOWN"
+                        Hall="NOT AVAILABLE"
+                        Gender="UNKNOWN"
                     fi
                 fi
 
-                email=`echo "$data" | grep -Po '[\w\+\._]+@[\w*\.]{2,}\w+' | head -1`
-                if [ "$email" = "" ]; then
-                    email="NOT AVAILABLE"
+                EmailID=`echo "$data" | grep -Po '[\w\+\._]+@[\w*\.]{2,}\w+' | head -1`
+                if [ "$EmailID" = "" ]; then
+                    EmailID="NOT AVAILABLE"
                 fi
 
-                name=`echo "$data" | grep -P -A1 'Name' | tail -1 | grep -Po '\w[\s\w\.\(\)\[\]\/]*[^\s]'`
-                if [ "$name" = ""  ]; then
-                    name="NOT AVAILABLE"
+                Name=`echo "$data" | grep -P -A1 'Name' | tail -1 | grep -Po '\w[\s\w\.\(\)\[\]\/]*[^\s]'`
+                if [ "$Name" = ""  ]; then
+                    Name="NOT AVAILABLE"
                 fi
 
-                bloodGroup=`echo "$data" | grep -P -A1 'Blood Group' | tail -1 | grep -Po '[ABO]{1,2}[\+-]{1}'`
-                if [ "$bloodGroup" = ""  ]; then
-                    bloodGroup="NOT AVAILABLE"
+                BloodGroup=`echo "$data" | grep -P -A1 'Blood Group' | tail -1 | grep -Po '[ABO]{1,2}[\+-]{1}'`
+                if [ "$BloodGroup" = ""  ]; then
+                    BloodGroup="NOT AVAILABLE"
                 fi
 
-                dept=`echo "$data" | grep -P -A1 'Department' | tail -1 | grep -Po '\w[\s\w&\.]+[^\s]'`
+                Department=`echo "$data" | grep -P -A1 'Department' | tail -1 | grep -Po '\w[\s\w&\.]+[^\s]'`
 
                 rollno=$1
 
-                ( echo "$rollno"     >> RollNo        & \
-                  echo "$gender"     >> Gender        & \
-                  echo "$email"      >> EmailID       & \
-                  echo "$bloodGroup" >> BloodGroup    & \
-                  echo "$name"       >> Name          & \
-                  echo "$dept"       >> Department    & \
-                  echo "$hall"       >> Hall )        &>/dev/null
+                url=`echo "$data" | grep -P "img" | grep -Po 'http.*jpg'`
 
+                cd "../../../images"
+                    wget -quiet -O "${rollno}.jpg" "${url}"
+                cd - >/dev/null
+
+                echo "${rollno}" >> RollNo
+                line=`grep -Pn "${rollno}" RollNo | cut -d: -f1`
+                insert "Gender" "${line}" "${Gender}"
+                insert "EmailID" "${line}" "${EmailID}"
+                insert "Hall" "${line}" "${Hall}"
+                insert "BloodGroup" "${line}" "${BloodGroup}"
+                insert "Department" "${line}" "${Department}"
+                insert "Name" "${line}" "${Name}"
             cd ..
         cd ..
     cd ..
@@ -69,6 +85,7 @@ extract() {
 }
 
 export -f extract # export extract as xargs calls it from a bash
+export -f insert
 
 echo "Scraping Data for Y16"
 seq 160001 160832 | xargs -P0 -I {} bash -c 'extract {} 16' 

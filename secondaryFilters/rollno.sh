@@ -33,7 +33,17 @@ rollnoVAR() {
     if [ ! -s "temp/display" ]; then
         echo "No Result Found" > "temp/display"
     fi
-    vim  temp/display
+    totalLines=`wc -l < "temp/display"`
+    if [ "${totalLines}" = "11"  ]; then
+        cat temp/display
+        echo "Do you want to see the image?[y/n]"
+        read tans
+        if [ "${tans}" = "y" ] || [ "${tans}" = "Y" ]; then
+            echo "imgsource"
+        fi
+    else
+        vim  temp/display
+    fi
     rm temp/display
     return
 }

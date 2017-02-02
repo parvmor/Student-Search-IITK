@@ -45,7 +45,7 @@ name() {
             if [  "${ans}" = "n" ] || [ "${ans}" = "N" ]; then
                 break
             fi
-            ans ="n"
+            ans="n"
         fi
         if [ "${ans}" = "n" ] || [ "${ans}" = "N" ]; then
             superFilter "name"

@@ -27,6 +27,7 @@ cd Students
     done
 
 cd ..
+mkdir images
 cd script
 echo "Necessary Directories Made"
 echo

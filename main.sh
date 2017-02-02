@@ -23,12 +23,15 @@ do
     source "${scriptPath}/filters/${files}"
 done
 
+rm -rf "${scriptPath}/temp"
+mkdir "${scriptPath}/temp"
+
 if [ ! -d "${scriptPath}/data/Students" ]; then
     echo "Database of Students does not exist locally."
     cd "${scriptPath}/data/script"
     chmod 744 scrap.sh
     ./scrap.sh
-    cd -
+    cd - >/dev/null
     echo "Student Search is ready to be used now"
 fi
 
@@ -66,7 +69,7 @@ do
                 hall
                 break ;;
             "Feedback")
-                echo "Feedback"
+                echo "Please write a mail to parv@iitk.ac.in for your suggestions."
                 break ;;
             "Quit")
                 echo "Thank You for using the search. Exiting Student Search." 
