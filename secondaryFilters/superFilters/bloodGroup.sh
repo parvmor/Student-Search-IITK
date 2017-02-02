@@ -9,7 +9,7 @@ superBG() {
         if [ "$year" -eq "$year" ] 2>/dev/null; then
             :
         else
-            echo "error: Not a Number"
+            echo "error: Not a Number" >> "temp/tempStor"
             continue
         fi
         cd "${scriptPath}/data/Students"

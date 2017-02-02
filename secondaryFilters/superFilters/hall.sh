@@ -1,24 +1,24 @@
 
-superDept() {
-    department=""
-    PS3="Please choose the required department:"
-    select dept in "${departments[@]}"
+superHall() {
+    Hall=""
+    PS3="Please choose the required hall:"
+    select hall in "${halls[@]}"
     do
         flag="0"
-        for temp in "${departments[@]}"
+        for temp in "${halls[@]}"
         do
-            if [ "${temp}" = "${dept}" ]; then
+            if [ "${temp}" = "${hall}" ]; then
                 flag="1"
                 break
             fi
         done
         if [ "$flag" = "0" ]; then
-            echo "No such department exists"
+            echo "No such hall exists"
             cd "${PWD}"
             PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
             return
         fi
-        department="${dept}"
+        Hall="${hall}"
         break
     done
     touch "${scriptPath}/temp/tempStor"
@@ -41,8 +41,8 @@ superDept() {
                             cd ..
                             continue
                         fi
-                        dept=`head -${Line} Department | tail -1`
-                        if [ "${dept}" = "${department}" ]; then
+                        hall=`head -${Line} Hall | tail -1`
+                        if [ "${hall}" = "${Hall}" ]; then
                             echo "${line}" >> "../../../../temp/tempStor"
                         fi
                     cd ..

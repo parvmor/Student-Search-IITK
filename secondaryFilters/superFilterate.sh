@@ -26,8 +26,10 @@ superFilter() {
             "Email-ID")
                 break ;;
             "Gender")
+                superGen "$1"
                 break ;;
             "Hall")
+                superHall "$1"
                 break ;;
             *)
                 echo "Invalid Option" ;;

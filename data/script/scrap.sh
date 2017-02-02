@@ -39,7 +39,7 @@ extract() {
                     email="NOT AVAILABLE"
                 fi
 
-                name=`echo "$data" | grep -P -A1 'Name' | tail -1 | grep -Po '\w[\s\w\.\(\)\[\]\/]*'`
+                name=`echo "$data" | grep -P -A1 'Name' | tail -1 | grep -Po '\w[\s\w\.\(\)\[\]\/]*[^\s]'`
                 if [ "$name" = ""  ]; then
                     name="NOT AVAILABLE"
                 fi
@@ -49,7 +49,7 @@ extract() {
                     bloodGroup="NOT AVAILABLE"
                 fi
 
-                dept=`echo "$data" | grep -P -A1 'Department' | tail -1 | grep -Po '\w[\s\w&\.]+'`
+                dept=`echo "$data" | grep -P -A1 'Department' | tail -1 | grep -Po '\w[\s\w&\.]+[^\s]'`
 
                 rollno=$1
 

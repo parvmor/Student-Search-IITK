@@ -1,7 +1,6 @@
 
 hall() {
     PS3="Please choose the required hall:"
-    halls=("HALL1" "HALL2" "HALL3" "HALL4" "HALL5" "HALL6" "HALL7" "HALL8" "HALL9" "HALLX" "GHT")
     hall=""
     select Hall in "${halls[@]}"
     do

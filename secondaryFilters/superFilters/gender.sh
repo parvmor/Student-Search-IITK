@@ -1,24 +1,24 @@
 
-superDept() {
-    department=""
-    PS3="Please choose the required department:"
-    select dept in "${departments[@]}"
+superGen() {
+    gender=""
+    PS3="Please choose the required gender:"
+    select gen in "M" "F"
     do
         flag="0"
-        for temp in "${departments[@]}"
+        for temp in "M" "F"
         do
-            if [ "${temp}" = "${dept}" ]; then
+            if [ "${temp}" = "${gen}" ]; then
                 flag="1"
                 break
             fi
         done
         if [ "$flag" = "0" ]; then
-            echo "No such department exists"
+            echo "No such gender exists"
             cd "${PWD}"
             PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
             return
         fi
-        department="${dept}"
+        gender="${gen}"
         break
     done
     touch "${scriptPath}/temp/tempStor"
@@ -41,8 +41,8 @@ superDept() {
                             cd ..
                             continue
                         fi
-                        dept=`head -${Line} Department | tail -1`
-                        if [ "${dept}" = "${department}" ]; then
+                        gen=`head -${Line} Gender | tail -1`
+                        if [ "${gender}" = "${gen}" ]; then
                             echo "${line}" >> "../../../../temp/tempStor"
                         fi
                     cd ..
