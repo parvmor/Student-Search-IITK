@@ -11,16 +11,6 @@ chmod 744 directoryMaker.sh
 echo "Starting to scrap data now..."
 echo
 
-insert() {
-    while [ 1 -lt 2 ]
-    do    
-        if [ `wc -l < ${1}` -eq "`expr ${2} - 1`" ]; then
-            echo "${3}" >> "${1}"
-            break
-        fi
-    done
-}
-
 extract() {
     data=$(curl -s http://oa.cc.iitk.ac.in/Oa/Jsp/OAServices/IITk_SrchRes.jsp?sbm=Y -d typ="stud" -d numtxt=$1) # store data in a variable for multiple use
     cd ../Students
@@ -49,7 +39,7 @@ extract() {
                     EmailID="NOT AVAILABLE"
                 fi
 
-                Name=`echo "$data" | grep -P -A1 'Name' | tail -1 | grep -Po '\w[\s\w\.\(\)\[\]\/]*[^\s]'`
+                Name=`echo "$data" | grep -P -A1 'Name' | tail -1 | grep -Po '\w[\s\w\.\(\)\[\]\/\d\-]*[^\s]'`
                 if [ "$Name" = ""  ]; then
                     Name="NOT AVAILABLE"
                 fi
@@ -66,17 +56,53 @@ extract() {
                 url=`echo "$data" | grep -P "img" | grep -Po 'http.*jpg'`
 
                 cd "../../../images"
-                    wget -quiet -O "${rollno}.jpg" "${url}"
+                    wget -q -O "${rollno}.jpg" "${url}"
                 cd - >/dev/null
 
                 echo "${rollno}" >> RollNo
                 line=`grep -Pn "${rollno}" RollNo | cut -d: -f1`
-                insert "Gender" "${line}" "${Gender}"
-                insert "EmailID" "${line}" "${EmailID}"
-                insert "Hall" "${line}" "${Hall}"
-                insert "BloodGroup" "${line}" "${BloodGroup}"
-                insert "Department" "${line}" "${Department}"
-                insert "Name" "${line}" "${Name}"
+                while [ 1 -lt 2 ]
+                do    
+                    if [ "`wc -l < Gender`" =  "`expr ${line} - 1`" ]; then
+                        echo "${Gender}" >> "Gender"
+                        break
+                    fi
+                done
+                while [ 1 -lt 2 ]
+                do    
+                    if [ "`wc -l < Name`" =  "`expr ${line} - 1`" ]; then
+                        echo "${Name}" >> "Name"
+                        break
+                    fi
+                done
+                while [ 1 -lt 2 ]
+                do    
+                    if [ "`wc -l < BloodGroup`" =  "`expr ${line} - 1`" ]; then
+                        echo "${BloodGroup}" >> "BloodGroup"
+                        break
+                    fi
+                done
+                while [ 1 -lt 2 ]
+                do    
+                    if [ "`wc -l < Hall`" =  "`expr ${line} - 1`" ]; then
+                        echo "${Hall}" >> "Hall"
+                        break
+                    fi
+                done
+                while [ 1 -lt 2 ]
+                do    
+                    if [ "`wc -l < EmailID`" =  "`expr ${line} - 1`" ]; then
+                        echo "${EmailID}" >> "EmailID"
+                        break
+                    fi
+                done
+                while [ 1 -lt 2 ]
+                do    
+                    if [ "`wc -l < Department`" =  "`expr ${line} - 1`" ]; then
+                        echo "${Department}" >> "Department"
+                        break
+                    fi
+                done
             cd ..
         cd ..
     cd ..
@@ -85,7 +111,6 @@ extract() {
 }
 
 export -f extract # export extract as xargs calls it from a bash
-export -f insert
 
 echo "Scraping Data for Y16"
 seq 160001 160832 | xargs -P0 -I {} bash -c 'extract {} 16' 

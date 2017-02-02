@@ -11,7 +11,7 @@ bloodGroup() {
                 for program in "${programs[@]}"
                 do
                     cd "${program}"
-                        lines="`grep -Pn "${bG}" BloodGroup | cut -d: -f 1`"
+                        lines="`grep -Pin "${bG}" BloodGroup | cut -d: -f 1`"
                         if [ "${lines}" = ""  ]; then
                             cd ..
                             continue

@@ -36,14 +36,26 @@ rollnoVAR() {
     totalLines=`wc -l < "temp/display"`
     if [ "${totalLines}" = "11"  ]; then
         cat temp/display
+        roll=`cat temp/$1`
         echo "Do you want to see the image?[y/n]"
         read tans
         if [ "${tans}" = "y" ] || [ "${tans}" = "Y" ]; then
-            echo "imgsource"
+            cacaview "data/images/${roll}.jpg"
         fi
     else
         vim  temp/display
     fi
+    echo
+    echo "Do you want to save this file locally?[y/n]"
+    read ans
+    if [ "$ans" = y  ] || [ "$ans" = Y ]; then
+        if [ ! -d "~/Documnets"  ]; then
+            mkdir "~/Documents"
+        fi
+        cp temp/display ~/Documents
+        echo "A copy has been made to the Documents folder."
+    fi
+    echo
     rm temp/display
     return
 }

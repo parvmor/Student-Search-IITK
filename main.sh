@@ -29,21 +29,23 @@ mkdir "${scriptPath}/temp"
 if [ ! -d "${scriptPath}/data/Students" ]; then
     echo "Database of Students does not exist locally."
     cd "${scriptPath}/data/script"
-    chmod 744 scrap.sh
-    ./scrap.sh
-    cd - >/dev/null
+    chmod 744 scrap2.sh
+    ./scrap2.sh
+    cd "${PWD}" >/dev/null
     echo "Student Search is ready to be used now"
 fi
 
 # cool ascii art :p
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -   
 toilet --metal -w 150 Student Search IITK
-
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -   
 # start of asking user of filter method
 PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
 options=("Roll Number" "Name" "Blood Group" "Department" "Email-ID" "Gender" "Hall")
 while [ "2" = "2"  ]
 do
     echo "Please choose on what basis do you want to filter your search?"
+    echo
     select opt in "${options[@]}" "Feedback" "Quit"
     do
         case "$opt" in
@@ -78,6 +80,7 @@ do
                 echo "Invalid Option" ;;
         esac
     done
+    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -   
     rm -rf "${scriptPath}/temp"
     mkdir "${scriptPath}/temp"
 done

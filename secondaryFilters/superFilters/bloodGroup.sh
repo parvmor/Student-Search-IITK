@@ -22,8 +22,8 @@ superBG() {
                             cd ..
                             continue
                         fi
-                        bloodGroup=`head -${Line} BloodGroup | tail -1`
-                        if [ "${bloodGroup}" = "${bG}" ]; then
+                        bloodGroup="`head -${Line} BloodGroup | tail -1`"
+                        if [ "${bloodGroup,,}" = "${bG,,}" ]; then
                             echo "${line}" >> "../../../../temp/tempStor"
                         fi
                     cd ..
