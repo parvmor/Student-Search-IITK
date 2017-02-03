@@ -13,7 +13,7 @@ echo "Starting to scrap data now..."
 echo
 
 output() {
-    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+    printf '%*s\n' "$(tput cols)" | tr " " -
     echo "Roll No.: $1"
     echo "Batch: $2"
     echo "Degree: $3"
@@ -23,7 +23,7 @@ output() {
     echo "Gender: $7"
     echo "Hall: $8"
     echo "Name: $9"
-    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+    printf '%*s\n' "$(tput cols)" | tr " " -
 }
 
 extract() {
@@ -72,50 +72,35 @@ extract() {
     cd script
 }
 
+export -f extract
+export -f output
+
 echo "Scraping Data for Y16"
-for i in `seq 160001 160832`
-do
-   extract $i 16
-done
+seq 160001 160832 | xargs -P0 -I {} bash -c 'extract {} 16'   
 echo "Data Scraped for Y16"
 echo
 
 echo "Scraping Data for Y15"
-for i in `seq 150001 150845`
-do
-    extract $i 15
-done
+seq 150001 150845 | xargs -P0 -I {} bash -c 'extract {} 15' 
 echo "Data Scraped for Y15"
 echo
 
 echo "Scraping Data for Y14"
-for i in `seq 14001 14832`
-do
-    extract $i 14
-done
+seq 14001 14832 | xargs -P0 -I {} bash -c 'extract {} 14' 
 echo "Data Scraped for Y14"
 echo
 
 echo "Scraping Data for Y13"
-for i in `seq 13001 13819`
-do
-    extract $i 13
-done
+seq 13001 13819 | xargs -P0 -I {} bash -c 'extract {} 13'
 echo "Data Scraped for Y13"
 echo
 
 echo "Scraping Data for Y12"
-for i in `seq 12001 12837`
-do
-    extract $i 12
-done
+seq 12001 12837 | xargs -P0 -I {} bash -c 'extract {} 12'
 echo "Data Scraped for Y12"
 echo
 
 echo "Scraping Data for Y11"
-for i in `seq 11001 11833`
-do
-    extract $i 11
-done
+seq 11001 11833 | xargs -P0 -I {} bash -c 'extract {} 11'
 echo "Data Scraped for Y11"
 echo

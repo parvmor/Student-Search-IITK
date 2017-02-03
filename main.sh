@@ -36,11 +36,11 @@ if [ ! -d "${scriptPath}/data/Students" ]; then
 fi
 
 # cool ascii art :3
-printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -   
-printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+printf '%*s\n' "$(tput cols)" | tr " " -
+printf '%*s\n' "$(tput cols)" | tr " " -
 toilet --metal -w 50 Student Search IITK
-printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
-printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -   
+printf '%*s\n' "$(tput cols)" | tr " " -
+printf '%*s\n' "$(tput cols)" | tr " " -
 # start of asking user of filter method
 PS3="Pick an Option(Enter 10 or Ctrl-C to exit the search): "
 options=("Roll Number" "Name" "Blood Group" "Department" "Email-ID" "Gender" "Hall" "Degree")
@@ -86,7 +86,7 @@ do
                 echo "Invalid Option" ;;
         esac
     done
-    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -   
+    printf '%*s\n' "$(tput cols)" | tr " " -
     rm -rf "${scriptPath}/temp"
     mkdir "${scriptPath}/temp"
 done
