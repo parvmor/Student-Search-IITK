@@ -6,7 +6,7 @@ superName() {
     while read line
     do
         year="${line:0:2}"
-        if [ "$year" -eq "$year" ] 2>/dev/null; then
+        if [ "$line" -eq "$line" ] 2>/dev/null; then
             :
         else
             echo "error: Not a Number" >> "temp/tempStor"
@@ -14,21 +14,12 @@ superName() {
         fi
         cd "${scriptPath}/data/Students"
             cd "Y${year}"
-                for program in "${programs[@]}"
-                do
-                    cd "${program}"
-                        Line=`grep -Pn "${line}" RollNo | cut -d: -f1`
-                        if [ "$Line" = ""  ]; then
-                            cd ..
-                            continue
-                        fi
-                        NAME=`head -${Line} Name | tail -1`
-                        #lower case substr search
-                        if [[ "${NAME,,}" = "${name,,}"*  ]]; then
-                            echo "${line}" >> "../../../../temp/tempStor"
-                        fi
-                    cd ..
-                done
+                cd  "${line}"
+                    Name=`cat Name`
+                    if [[ "${Name,,}" = "${name,,}"* ]]; then
+                        echo "${line}" >> "../../../../temp/tempStor"
+                    fi
+                cd ..
             cd ..
         cd ../..
     done < "temp/$1"

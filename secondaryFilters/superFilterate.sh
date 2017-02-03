@@ -33,6 +33,9 @@ superFilter() {
             "Hall")
                 superHall "$1"
                 break ;;
+            "Degree")
+                superDeg "$1"
+                break ;;
             *)
                 echo "Invalid Option" ;;
         esac

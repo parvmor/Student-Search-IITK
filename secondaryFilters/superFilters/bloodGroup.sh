@@ -6,7 +6,7 @@ superBG() {
     while read line
     do
         year="${line:0:2}"
-        if [ "$year" -eq "$year" ] 2>/dev/null; then
+        if [ "$line" -eq "$line" ] 2>/dev/null; then
             :
         else
             echo "error: Not a Number" >> "temp/tempStor"
@@ -14,20 +14,12 @@ superBG() {
         fi
         cd "${scriptPath}/data/Students"
             cd "Y${year}"
-                for program in "${programs[@]}"
-                do
-                    cd "${program}"
-                        Line=`grep -Pn "${line}" RollNo | cut -d: -f1`
-                        if [ "$Line" = ""  ]; then
-                            cd ..
-                            continue
-                        fi
-                        bloodGroup="`head -${Line} BloodGroup | tail -1`"
-                        if [ "${bloodGroup,,}" = "${bG,,}" ]; then
-                            echo "${line}" >> "../../../../temp/tempStor"
-                        fi
-                    cd ..
-                done
+                cd "${line}"
+                    bloodGroup=`cat BloodGroup`
+                    if [ "${bG,,}" = "${bloodGroup,,}"  ]; then
+                        echo "${line}" >> "../../../../temp/tempStor"
+                    fi
+                cd ..
             cd ..
         cd ../..
     done < "temp/$1"

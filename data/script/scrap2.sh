@@ -12,66 +12,64 @@ chmod 744 directoryMaker.sh
 echo "Starting to scrap data now..."
 echo
 
+output() {
+    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+    echo "Roll No.: $1"
+    echo "Batch: $2"
+    echo "Degree: $3"
+    echo "Blood Group: $4"
+    echo "Department: $5"
+    echo "Email-ID: $6"
+    echo "Gender: $7"
+    echo "Hall: $8"
+    echo "Name: $9"
+    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+}
+
 extract() {
     data=$(curl -s http://oa.cc.iitk.ac.in/Oa/Jsp/OAServices/IITk_SrchRes.jsp?sbm=Y -d typ="stud" -d numtxt=$1) # store data in a variable for multiple use
     cd ../Students
         cd "Y$2"
-            program=`echo "$data" | grep -P -A1 'Program' | tail -1 | grep -Po '\w+'`
-            if [ ! -d "${program}"   ]; then
-                mkdir "${program}"
-            fi 
-            cd "${program}"
-
-                Gender=`echo "$data" | grep -P -A1 'Gender' | tail -1 | grep -Po '\w'`
-
-                if [ "$Gender" = "F"   ]; then
-                    Hall="GHT"
+            cd "$1"
+                program=`echo "$data" | grep -P -A1 'Program' | tail -1 | grep -Po '\w+'`
+                echo "${program}" > "Program"
+                gender=`echo "$data" | grep -P -A1 'Gender' | tail -1 | grep -Po '\w'`
+                if [ "$gender" = "F"   ]; then
+                    hall="GHT"
                 else
-                    if [ "$Gender" = "M"  ]; then
-                        Hall=`echo "$data" | grep -P -A1 'Hostel Info' | tail -1 | grep -Po 'HALL[\dX]{1}'`
+                    if [ "$gender" = "M"  ]; then
+                        hall=`echo "$data" | grep -P -A1 'Hostel Info' | tail -1 | grep -Po 'HALL[\dX]{1}'`
                     else
-                        Hall="NOT AVAILABLE"
-                        Gender="UNKNOWN"
+                        hall="NOT AVAILABLE"
+                        gender="UNKNOWN"
                     fi
                 fi
-
-                EmailID=`echo "$data" | grep -Po '[\w\+\._]+@[\w*\.]{2,}\w+' | head -1`
-                if [ "$EmailID" = "" ]; then
-                    EmailID="NOT AVAILABLE"
+                echo "${gender}" > Gender
+                echo "${hall}" > Hall
+                email=`echo "$data" | grep -Po '[\w\+\._]+@[\w*\.]{2,}\w+' | head -1`
+                if [ "$email" = "" ]; then
+                    email="NOT AVAILABLE"
                 fi
-
-                Name=`echo "$data" | grep -P -A1 'Name' | tail -1 | grep -Po '\w[\s\w\.\(\)\[\]\/\d\-]*[^\s]'`
-                if [ "$Name" = ""  ]; then
-                    Name="NOT AVAILABLE"
+                echo "${email}" > EmailID
+                name=`echo "$data" | grep -P -A1 'Name' | tail -1 | grep -Po '\w[\s\w\.\(\)\[\]\/\d\-]*[^\s]'`
+                if [ "$name" = ""  ]; then
+                    name="NOT AVAILABLE"
                 fi
-
-                BloodGroup=`echo "$data" | grep -P -A1 'Blood Group' | tail -1 | grep -Po '[ABO]{1,2}[\+-]{1}'`
-                if [ "$BloodGroup" = ""  ]; then
-                    BloodGroup="NOT AVAILABLE"
+                echo "${name}" > Name
+                bloodGroup=`echo "$data" | grep -P -A1 'Blood Group' | tail -1 | grep -Po '[ABO]{1,2}[\+-]{1}'`
+                if [ "$bloodGroup" = ""  ]; then
+                    bloodGroup="NOT AVAILABLE"
                 fi
-
-                Department=`echo "$data" | grep -P -A1 'Department' | tail -1 | grep -Po '\w[\s\w&\.]+[^\s]'`
-
-                rollno=$1
-
+                echo "${bloodGroup}" > BloodGroup
+                department=`echo "$data" | grep -P -A1 'Department' | tail -1 | grep -Po '\w[\s\w&\.]+[^\s]'`
+                echo "${department}" > Department
+                output "$1" "Y${2}" "${program}" "${bloodGroup}" "${department}" "${email}" "${gender}" "${hall}" "${name}" > Summary                
                 url=`echo "$data" | grep -P "img" | grep -Po 'http.*jpg'`
-
-                cd "../../../images"
-                    wget -q -O "${rollno}.jpg" "${url}"
-                cd - >/dev/null
-
-                echo "${rollno}"      >> RollNo
-                echo "${Name}"        >> Name
-                echo "${EmailID}"     >> EmailID
-                echo "${Department}"  >> Department
-                echo "${Hall}"        >> Hall
-                echo "${Gender}"      >> Gender
-                echo "${BloodGroup}"  >> BloodGroup
+                wget -q -O "image.jpg" "${url}"
             cd ..
         cd ..
     cd ..
     cd script
-
 }
 
 echo "Scraping Data for Y16"

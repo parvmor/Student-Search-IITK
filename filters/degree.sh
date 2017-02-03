@@ -1,23 +1,25 @@
 
-gender() {
-    PS3="Please choose the required gender:"
-    genders=("M" "F")
-    gender=""
-    select gen in "${genders[@]}"
+degree() {
+    PS3="Please choose the required degree:"
+    degrees=("BTech" "BS" "Prep")
+    degree=""
+    select deg in "${degrees[@]}"
     do
-        case "${gen}" in
-            "F")
+        case "${deg}" in
+            "BTech")
                  ;;
-            "M")
+            "BS")
                  ;;
+            "Prep")
+                ;;
             *)
-                echo "No such gender exists"
+                echo "No such degree exists"
                 PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
                 cd "${PWD}"
                 return ;;
         esac
-        gender="${gen}"
-        touch "${scriptPath}/temp/gender"
+        degree="${deg}"
+        touch "${scriptPath}/temp/degree"
         cd "${scriptPath}/data/Students"
             for year in `seq 11 16`
             do
@@ -25,9 +27,9 @@ gender() {
                     for dir in `ls`
                     do
                         cd "${dir}"
-                            gen=`cat Gender`
-                            if [ "${gen}" = "${gender}" ]; then
-                                echo "${dir}" >> "../../../../temp/gender"
+                            deg=`cat Program`
+                            if [ "${deg}" = "${degree}" ]; then
+                                echo "${dir}" >> "../../../../temp/degree"
                             fi
                         cd ..
                     done
@@ -36,9 +38,9 @@ gender() {
         cd ../..
         break
     done
-    if [ ! -s "temp/gender" ]; then
-        echo "No such gender exists"
-        rm temp/gender
+    if [ ! -s "temp/degree" ]; then
+        echo "No such degree exists"
+        rm temp/degree
         cd "${PWD}"
         return
     fi
@@ -47,7 +49,7 @@ gender() {
         echo "Do you want to see the result(R) or add further filters(F)?[R/F](Ctrl-C to exit)"
         read ans
         if [ "${ans}" = "r"  ] || [ "${ans}" = "R"   ]; then
-            rollnoVAR "gender"           
+            rollnoVAR "degree"           
             echo "Do you want to add further filters?(y/n)"
             read ans
             if [ "${ans}" = "n"  ] || [ "${ans}" = "N"  ];then
@@ -56,10 +58,10 @@ gender() {
             ans="F"
         fi
         if [ "${ans}" = "f"  ] || [ "${ans}" = "R"  ];then
-            superFilter "gender"
+            superFilter "degree"
         fi
     done
-    rm "temp/gender"
+    rm "temp/degree"
     PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
     cd "${PWD}"
 }

@@ -8,19 +8,12 @@ emailID() {
         for year in `seq 11 16`
         do
             cd "Y${year}"
-                for program in "${programs[@]}"
+                for dir in `ls` 
                 do
-                    cd "${program}"
-                        lines=`grep -Pn "${email}" EmailID | cut -d: -f 1`
-                        if [ "${lines}" != "" ]; then
-                            touch "../../../../temp/tempEID"
-                            echo "${lines}" > "../../../../temp/tempEID"
-                            while read line
-                            do
-                                roll=`head -${line} RollNo | tail -1` 
-                                echo "${roll}" >> "../../../../temp/email"
-                            done < "../../../../temp/tempEID"
-                            rm "../../../../temp/tempEID"
+                    cd "${dir}"
+                        emailid=`cat EmailID`
+                        if [[ "${emailid,,}" = "${email,,}"*  ]]; then
+                            echo "${dir}" >> "../../../../temp/email"
                         fi
                     cd ..
                 done
@@ -35,18 +28,18 @@ emailID() {
     fi
     while [ 1 -lt 2 ]
     do
-        echo "Do you want to see the result(y) or add further filters(n)?[y/n](Ctrl-C to exit)"
+        echo "Do you want to see the result(R) or add further filters(F)?[R/F](Ctrl-C to exit)"
         read ans
-        if [ "${ans}" = "y" ] || [ "${ans}" = "Y" ]; then
+        if [ "${ans}" = "r" ] || [ "${ans}" = "R" ]; then
             rollnoVAR "email"
             echo "Do you want to add further filters?(y/n)"
             read ans
             if [  "${ans}" = "n" ] || [ "${ans}" = "N" ]; then
                 break
             fi
-            ans ="n"
+            ans="F"
         fi
-        if [ "${ans}" = "n" ] || [ "${ans}" = "N" ]; then
+        if [ "${ans}" = "f" ] || [ "${ans}" = "F" ]; then
             superFilter "email"
         fi
     done

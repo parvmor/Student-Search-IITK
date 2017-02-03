@@ -35,13 +35,13 @@ if [ ! -d "${scriptPath}/data/Students" ]; then
     echo "Student Search is ready to be used now"
 fi
 
-# cool ascii art :p
+# cool ascii art :3
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -   
 toilet --metal -w 150 Student Search IITK
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -   
 # start of asking user of filter method
 PS3="Pick an Option(Enter 9 or Ctrl-C to exit the search): "
-options=("Roll Number" "Name" "Blood Group" "Department" "Email-ID" "Gender" "Hall")
+options=("Roll Number" "Name" "Blood Group" "Department" "Email-ID" "Gender" "Hall" "Degree")
 while [ "2" = "2"  ]
 do
     echo "Please choose on what basis do you want to filter your search?"
@@ -69,6 +69,9 @@ do
                 break ;;
             "Hall")
                 hall
+                break ;;
+            "Degree")
+                degree
                 break ;;
             "Feedback")
                 echo "Please write a mail to parv@iitk.ac.in for your suggestions."
